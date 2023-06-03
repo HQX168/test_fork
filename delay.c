@@ -21,6 +21,15 @@
 
 
 
+/*
+   函数名：findMax
+   功能：输入两个数，返回最大值
+   输入：int a, int b      //需要比较的两个数字
+   输出：result            //找出的最大值
+*/
+int finMax(int a, int b);
+
+
 //========================================================================
 // 函数: void  delay_ms(unsigned char ms)
 // 描述: 延时函数。
@@ -40,5 +49,21 @@ void delay_ms(u16 ms)
 	 //444444444444
 }
 
+
+int finMax(int a, int b)
+{
+	int result;
+
+	if(a > b)	
+	{
+		result = a;
+	}
+	else
+	{
+		result = b;
+	}
+
+	return result;
+}
 
 
