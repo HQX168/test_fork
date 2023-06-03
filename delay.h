@@ -4,6 +4,6 @@
 
 #include	"config.h"
 
-void delay_ms(u16 ms);
+void delay_ms(u16 ms);//aaaaa
 
 #endif
