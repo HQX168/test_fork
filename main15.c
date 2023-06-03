@@ -14,9 +14,9 @@ sbit fan = P0^3;
 sbit bell = P2^6;
 sbit bump = P0^2;
 //sbit smoke = P0^1;
-sbit k11=P1^2;//ĞŞ¸ÄÄ£Ê½
-sbit k21=P1^3;//¼Ó
-sbit k31=P1^4;//¼õ
+sbit k11=P1^2;//ä¿®æ”¹æ¨¡å¼
+sbit k21=P1^3;//åŠ 
+sbit k31=P1^4;//å‡
 
 
 
@@ -25,24 +25,30 @@ void fBell(int i);
 void fBump(int i);
 unsigned int read_temp();
 void DS18B20_Init();
-u8 temp,humi;//ÎÂ¶ÈÊª¶È±äÁ¿
+u8 temp,humi;//æ¸©åº¦æ¹¿åº¦å˜é‡
 int max[3] = {15,0,1};
 unsigned int count=0;
-int flags1=0;//ĞŞ¸ÄÄ£Ê½0²»ĞŞ¸Ä£¬1ĞŞ¸Ä
-bit flags2=0;//¼Óflag
-bit flags3=0;//¼õflag
+int flags1=0;//ä¿®æ”¹æ¨¡å¼0ä¸ä¿®æ”¹ï¼Œ1ä¿®æ”¹
+bit flags2=0;//åŠ flag
+bit flags3=0;//å‡flag
 bit flag1=0;
 
-u16 light;//¹âÕÕ±äÁ¿
-bit B20_Ready;//Ê¶±ğB20±êÖ¾Î»
-unsigned int TempH=22;//ÎÂ¶ÈÉÏÏŞ
-bit BEE_flag=0;//ÑÌÎíÉÏÏŞ
-bit Receive_Smoke;//ÑÌÎí±äÁ¿
-u16 LightH=500;//¹âÕÕÉÏÏŞ
+u16 light;//å…‰ç…§å˜é‡
+bit B20_Ready;//è¯†åˆ«B20æ ‡å¿—ä½
+unsigned int TempH=22;//æ¸©åº¦ä¸Šé™
+bit BEE_flag=0;//çƒŸé›¾ä¸Šé™
+bit Receive_Smoke;//çƒŸé›¾å˜é‡
+u16 LightH=500;//å…‰ç…§ä¸Šé™
 u16 i=0;
 
 
-
+int return_max(int a, int b)
+{
+	if(a > b)
+		return a;
+	else
+		return b;
+}
     
 
 
@@ -120,14 +126,14 @@ void Init()
 
 void GPIO_Init()
 {
-    GPIO_InitTypeDef	GPIO_InitStructure;		//½á¹¹¶¨Òå
-	GPIO_InitStructure.Pin  = GPIO_Pin_2|GPIO_Pin_3;		//Ö¸¶¨Òª³õÊ¼»¯µÄIO, GPIO_Pin_0 ~ GPIO_Pin_7, »ò²Ù×÷
-	GPIO_InitStructure.Mode = GPIO_OUT_PP;		//Ö¸¶¨IOµÄÊäÈë»òÊä³ö·½Ê½,GPIO_PullUp,GPIO_HighZ,GPIO_OUT_OD,GPIO_OUT_PP
-	GPIO_Inilize(GPIO_P0,&GPIO_InitStructure);	//³õÊ¼»¯
+    GPIO_InitTypeDef	GPIO_InitStructure;		//ç»“æ„å®šä¹‰
+	GPIO_InitStructure.Pin  = GPIO_Pin_2|GPIO_Pin_3;		//æŒ‡å®šè¦åˆå§‹åŒ–çš„IO, GPIO_Pin_0 ~ GPIO_Pin_7, æˆ–æ“ä½œ
+	GPIO_InitStructure.Mode = GPIO_OUT_PP;		//æŒ‡å®šIOçš„è¾“å…¥æˆ–è¾“å‡ºæ–¹å¼,GPIO_PullUp,GPIO_HighZ,GPIO_OUT_OD,GPIO_OUT_PP
+	GPIO_Inilize(GPIO_P0,&GPIO_InitStructure);	//åˆå§‹åŒ–
     
-	GPIO_InitStructure.Pin  = GPIO_Pin_1;		//Ö¸¶¨Òª³õÊ¼»¯µÄIO, GPIO_Pin_0 ~ GPIO_Pin_7, »ò²Ù×÷
-	GPIO_InitStructure.Mode = GPIO_HighZ;		//Ö¸¶¨IOµÄÊäÈë»òÊä³ö·½Ê½,GPIO_PullUp,GPIO_HighZ,GPIO_OUT_OD,GPIO_OUT_PP
-	GPIO_Inilize(GPIO_P0,&GPIO_InitStructure);	//³õÊ¼»¯
+	GPIO_InitStructure.Pin  = GPIO_Pin_1;		//æŒ‡å®šè¦åˆå§‹åŒ–çš„IO, GPIO_Pin_0 ~ GPIO_Pin_7, æˆ–æ“ä½œ
+	GPIO_InitStructure.Mode = GPIO_HighZ;		//æŒ‡å®šIOçš„è¾“å…¥æˆ–è¾“å‡ºæ–¹å¼,GPIO_PullUp,GPIO_HighZ,GPIO_OUT_OD,GPIO_OUT_PP
+	GPIO_Inilize(GPIO_P0,&GPIO_InitStructure);	//åˆå§‹åŒ–
     
 }
 
